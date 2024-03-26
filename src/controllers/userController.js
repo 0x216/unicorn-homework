@@ -93,3 +93,21 @@ exports.delete = async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 };
+
+exports.getMe = async (req, res) => {
+    try {
+        if (!req.user)
+            return res.status(404).send({ message: 'User not found' });
+
+        const user = await User.findByPk(req.user.id);
+        if (!user)
+            return res.status(404).send({ message: 'User not found' });
+
+        // exclude password and isSuperuser flag
+        const { password, isSuperuser, ...userData } = user.get();
+        res.send(userData);
+    }
+    catch {
+        res.status(500).send({ message: error.message });
+    }
+};
