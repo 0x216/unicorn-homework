@@ -1,5 +1,27 @@
 const User = require('../database/models/user');
 const { hashPassword, validatePassword } = require('../utils/passwordUtils');
+const { generateToken } = require('../utils/jwtUtils');
+
+exports.login = async (req, res) => {
+    const { email, password } = req.body;
+    try {
+        const user = await User.findOne({ where: { email } });
+        if (!user) {
+            return res.status(404).send({ message: 'User not found' });
+        }
+
+        const isMatch = await bcrypt.compare(password, user.password);
+        if (!isMatch) {
+            return res.status(400).send({ message: 'Invalid password' });
+        }
+
+        const token = generateToken(user);
+        res.send({ token });
+    } catch (error) {
+        res.status(500).send({ message: error.message });
+    }
+};
+
 
 exports.register = async (req, res) => {
     const { name, email, password } = req.body;
