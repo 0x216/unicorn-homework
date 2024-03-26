@@ -1,3 +1,4 @@
+const bcrypt = require('bcrypt');
 const User = require('../database/models/user');
 const { hashPassword, validatePassword } = require('../utils/passwordUtils');
 const { generateToken } = require('../utils/jwtUtils');
@@ -28,7 +29,7 @@ exports.register = async (req, res) => {
 
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
-        return res.status(400).send({ message: 'Email already in use.' });
+        return res.status(409).send({ message: 'Email already in use.' });
     }
 
     if (!validatePassword(password))
@@ -47,7 +48,7 @@ exports.register = async (req, res) => {
         res.status(201).send(userResponse);
     } catch (error) {
         if (error.name === 'SequelizeUniqueConstraintError') {
-            return res.status(400).send({ message: 'Email already in use.' });
+            return res.status(409).send({ message: 'Email already in use.' });
         }
         res.status(500).send({ message: error.message });
     }
