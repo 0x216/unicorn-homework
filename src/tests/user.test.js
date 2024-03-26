@@ -6,7 +6,7 @@
 /*   By: ant <ant@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/26 23:07:54 by ant               #+#    #+#             */
-/*   Updated: 2024/03/26 23:08:22 by ant              ###   ########.fr       */
+/*   Updated: 2024/03/26 23:12:46 by ant              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,53 @@ describe('User API', () => {
         
         expect(response.statusCode).toBe(400);
         expect(response.body.message).toBe('Invalid password');
+    });
+});
+
+describe('User API', () => {
+    let token;
+
+    beforeAll(async () => {
+        await request(app)
+            .post('/users/register/')
+            .send({
+                name: 'Me User',
+                email: 'me@example.com',
+                password: 'Password123!'
+            });
+
+        const resLogin = await request(app)
+            .post('/users/login/')
+            .send({
+                email: 'me@example.com',
+                password: 'Password123!'
+            });
+
+        token = resLogin.body.token;
+    });
+
+    it('should retrieve user information for the logged-in user', async () => {
+        const response = await request(app)
+            .get('/users/me')
+            .set('Authorization', `Bearer ${token}`);
+
+        expect(response.statusCode).toBe(200);
+        expect(response.body.email).toBe('me@example.com');
+        expect(response.body.name).toBe('Me User');
+    });
+
+    it('should fail to retrieve user information if no token is provided', async () => {
+        const response = await request(app)
+            .get('/users/me');
+
+        expect(response.statusCode).toBe(403);
+    });
+
+    it('should fail to retrieve user information if invalid token is provided', async () => {
+        const response = await request(app)
+            .get('/users/me')
+            .set('Authorization', 'Bearer wrongtoken');
+
+        expect(response.statusCode).toBe(401);
     });
 });

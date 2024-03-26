@@ -103,7 +103,6 @@ exports.getMe = async (req, res) => {
         if (!user)
             return res.status(404).send({ message: 'User not found' });
 
-        // exclude password and isSuperuser flag
         const { password, isSuperuser, ...userData } = user.get();
         res.send(userData);
     }
