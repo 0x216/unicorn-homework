@@ -1,0 +1,85 @@
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: black;
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    padding: 0px 0;
+    z-index: 1000;
+    box-sizing: border-box;
+    margin: auto
+}
+
+.navbar a {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
+.navbar a:hover {
+    background-color: gray
+}
+
+.siteName h2 {
+    user-select: none;
+    cursor: default;
+    color: white; 
+}
+
+.navbar-links {
+    display: flex;
+    align-items: center;
+}
+
+.navbar a, .user-icon {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+    display: inline-block;
+    transition: all 0.3s ease; 
+}
+
+.user-icon:hover {
+    background-color: gray;
+    border-radius: 50%;
+}
+
+.navbar a:hover {
+    background-color: transparent;
+    text-decoration: underline;
+    color: rgba(255, 255, 255, 255);
+    text-shadow: none;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    right: 0;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.user-icon {
+    font-size: 24px;
+}
