@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 
 import { apiUrl } from '../../api/apiConfig';
 
+import '../../assets/styles/LoginPage.css'
+import '../../assets/styles/AnimatedBackground.css'
+
 function LoginPage() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -12,9 +15,9 @@ function LoginPage() {
     useEffect(() => {
         const token = localStorage.getItem('token');
         if (token) {
-            navigate('/home'); 
+            navigate('/home');
         }
-    }, [navigate]); 
+    }, [navigate]);
 
     const validateForm = () => {
         const newErrors = {};
@@ -50,41 +53,54 @@ function LoginPage() {
                 localStorage.setItem('token', data.token);
                 navigate('/home');
             } else {
-                setErrors(prevErrors => ({...prevErrors, form: data.message || 'Unknown Error'}));
+                setErrors(prevErrors => ({ ...prevErrors, form: data.message || 'Unknown Error' }));
             }
         } catch (error) {
             console.error('Request error:', error);
-            setErrors(prevErrors => ({...prevErrors, form: 'Request error'}));
+            setErrors(prevErrors => ({ ...prevErrors, form: 'Request error' }));
         }
     };
 
     return (
-        <div>
-            <h2>Log in</h2>
-            <form onSubmit={handleLogin}>
-                <div>
-                    <label>Email:</label>
-                    <input 
-                        type="text" 
-                        value={email} 
-                        onChange={(e) => setEmail(e.target.value)} 
-                        placeholder="example@example.com"
-                    />
-                    {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
+        <div className="background"> {}
+            <div className="cube"></div>
+            <div className="cube"></div>
+            <div className="cube"></div>
+            <div className="cube"></div>
+            <div className="cube"></div>
+    
+            <div className="content-container"> {}
+                <div className="login-form">
+                    <h2>Log in</h2>
+                    <form onSubmit={handleLogin}>
+                        <div>
+                            <label>Email:</label>
+                            {errors.email && <div className="errors" style={{ color: 'red' }}>{errors.email}</div>}
+                            <input
+                                type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="example@example.com"
+                            />
+                        </div>
+                        <div>
+                            <label>Password:</label>
+                            {errors.password && <div className="errors" style={{ color: 'red' }}>{errors.password}</div>}
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="password"
+                            />
+                            
+                        </div>
+                        {errors.form && <div style={{ color: 'red' }}>{errors.form}</div>}
+                        <div className="button-container">
+                            <button type="submit">Login</button>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input 
-                        type="password" 
-                        value={password} 
-                        onChange={(e) => setPassword(e.target.value)} 
-                        placeholder="password"
-                    />
-                    {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-                </div>
-                {errors.form && <div style={{ color: 'red' }}>{errors.form}</div>}
-                <button type="submit">Login</button>
-            </form>
+            </div>
         </div>
     );
 }

@@ -69,34 +69,46 @@ function RegisterPage() {
     };
 
     return (
-        <div>
-            <h2>Register</h2>
-            <form onSubmit={handleRegister}>
-                <div>
-                    <label>Email:</label>
-                    <input
-                        type="text"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
-                        placeholder='Enter your email'
-                    />
-                    {errors.email && <div style={{ color: 'red' }}>{errors.email}</div>}
+        <div className="background">
+            <div className="cube"></div>
+            <div className="cube"></div>
+            <div className="cube"></div>
+            <div className="cube"></div>
+            <div className="cube"></div>
+    
+            <div className="content-container">
+                <div className="login-form">
+                    <h2>Register</h2>
+                    <form onSubmit={handleRegister}>
+                        <div>
+                            <label>Email:</label>
+                            {errors.email && <div className="errors">{errors.email}</div>}
+                            <input
+                                type="text"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                placeholder="Enter your email"
+                            />
+                        </div>
+                        <div>
+                            <label>Password:</label>
+                            {errors.password && <div className="errors">{errors.password}</div>}
+                            <input
+                                type="password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                placeholder="Enter your password"
+                            />
+                        </div>
+                        {errors.form && <div className="errors">{errors.form}</div>}
+                        <div className="button-container">
+                            <button type="submit">Register</button>
+                        </div>
+                    </form>
                 </div>
-                <div>
-                    <label>Password:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        placeholder='Enter your password'
-                    />
-                    {errors.password && <div style={{ color: 'red' }}>{errors.password}</div>}
-                </div>
-                {errors.form && <div style={{ color: 'red' }}>{errors.form}</div>}
-                <button type="submit">Register</button>
-            </form>
+            </div>
         </div>
-    );
+    );    
 }
 
 export default RegisterPage;
