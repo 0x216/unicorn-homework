@@ -6,11 +6,11 @@ import {
   Routes,
   Route
 } from 'react-router-dom';
-import LoginPage from './LoginPage';
-import HomePage from './HomePage';
+import LoginPage from './features/auth/LoginPage';
+import HomePage from './features/home/HomePage';
 
-import ProtectedRoute from './ProtectedRoute';
-import LogoutPage from './LogoutPage';
+import ProtectedRoute from './features/auth/ProtectedRoute';
+import LogoutPage from './features/auth/LogoutPage';
 
 function App() {
   return (

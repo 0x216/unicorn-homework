@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
-import { apiUrl } from './apiConfig';
+import { apiUrl } from '../../api/apiConfig';
 
 function HomePage() {
     const [trackingData, setTrackingData] = useState(null);

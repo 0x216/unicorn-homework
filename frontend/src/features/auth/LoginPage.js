@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { apiUrl } from './apiConfig';
+import { apiUrl } from '../../api/apiConfig';
 
 function LoginPage() {
     const [email, setemail] = useState('');
