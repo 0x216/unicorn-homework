@@ -1,8 +1,15 @@
-const Tracking = sequelize.define('Tracking', {
+const { DataTypes } = require('sequelize');
+const sequelize = require('../controller');
+
+const Achievements = sequelize.define('Achievements', {
     id: {
         type: DataTypes.INTEGER,
         primaryKey: true,
         autoIncrement: true,
+        allowNull: false
+    },
+    days: {
+        type: DataTypes.INTEGER,
         allowNull: false
     },
     userId: {
@@ -25,6 +32,7 @@ const Tracking = sequelize.define('Tracking', {
     }
 }, {
     timestamps: true,
+    underscored: true,
 });
 
-module.exports = Tracking;
+module.exports = Achievements;

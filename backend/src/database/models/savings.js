@@ -1,3 +1,6 @@
+const { DataTypes } = require('sequelize');
+const sequelize = require('../controller');
+
 const Savings = sequelize.define('Savings', {
     id: {
         type: DataTypes.INTEGER,
@@ -34,6 +37,7 @@ const Savings = sequelize.define('Savings', {
     }
 }, {
     timestamps: true,
+    underscored: true,
 });
 
 module.exports = Savings;

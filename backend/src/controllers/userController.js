@@ -83,7 +83,7 @@ exports.delete = async (req, res) => {
             return res.status(404).send({ message: 'User not found' });
         }
 
-        if (req.user.isSuperuser) {
+        if (req.user.is_superuser) {
             await user.destroy();
             res.send({ message: 'User deleted successfully' });
         } else {

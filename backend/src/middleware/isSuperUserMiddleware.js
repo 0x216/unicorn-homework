@@ -4,7 +4,7 @@ exports.isSuperuser = (req, res, next) => {
         return res.status(403).send({ message: 'Not authorized' });
     }
 
-    if (!req.user.isSuperuser) {
+    if (!req.user.is_superuser) {
         return res.status(403).send({ message: 'Requires superuser access' });
     }
 

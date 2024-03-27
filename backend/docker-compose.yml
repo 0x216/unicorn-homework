@@ -6,14 +6,17 @@ services:
       target: builder
     volumes:
       - .:/app
-      - /app/node_modules
-    command: npm run dev
+      # - /app/node_modules
+    command: node server.js
     ports:
       - "8000:8000"
     environment:
       NODE_ENV: development
     depends_on:
       - postgres
+    networks:
+      - default
+
   postgres:
     image: "postgres"
     volumes:
@@ -24,17 +27,25 @@ services:
       POSTGRES_PASSWORD: your_password
     ports:
       - "5434:5432"
+    networks:
+      - default
 
-  postgres_test:
-    image: "postgres"
-    volumes:
-      - postgres-test-data:/var/lib/postgresql/data
-    environment:
-      POSTGRES_DB: test_database
-      POSTGRES_USER: test_user
-      POSTGRES_PASSWORD: test_password
-    ports:
-      - "5435:5432"
+  # postgres_test:
+  #   image: "postgres"
+  #   volumes:
+  #     - postgres-test-data:/var/lib/postgresql/data
+  #   environment:
+  #     POSTGRES_DB: test_database
+  #     POSTGRES_USER: test_user
+  #     POSTGRES_PASSWORD: test_password
+  #   ports:
+  #     - "5435:5432"
+  #   networks:
+  #     - default
+
+networks:
+  default:
+    driver: bridge
 
 volumes:
   postgres-data:
