@@ -1,16 +1,31 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 import '../../assets/styles/NavBar.css';
 import { FaUser } from 'react-icons/fa';
+import { checkTokenValidity } from '../../api/auth'; 
 
 function NavBar() {
+    const [isAuth, setIsAuth] = useState(false);
+    const location = useLocation();
+    
+    useEffect(() => {
+        const verifyToken = async () => {
+            const isValid = await checkTokenValidity();
+            setIsAuth(isValid);
+        };
+
+        verifyToken();
+    }, []);
+
     return (
         <nav className="navbar">
             <div className="siteName">
                 <h2>Smokeless</h2>
             </div>
             <div className="navbar-links">
-                <Link to="/home">Home</Link>
+                {isAuth && <Link to="/home">Home</Link>}
+                {!isAuth && location.pathname === '/register' && <Link to="/">Login</Link>}
+                {!isAuth && location.pathname === '/' && <Link to="/register">Register</Link>}
                 <div className="dropdown">
                     <FaUser className="user-icon"/>
                     <div className="dropdown-content">

@@ -12,6 +12,7 @@ import HomePage from './features/home/HomePage';
 import ProtectedRoute from './features/auth/ProtectedRoute';
 import LogoutPage from './features/auth/LogoutPage';
 import RegisterPage from './features/auth/RegisterPage';
+import ProfilePage from './features/user/ProfilePage';
 
 import NavBar from './components/layout/NavBar';
 
@@ -28,6 +29,8 @@ function App() {
             <HomePage />
           </ProtectedRoute>
         } />
+        <Route path='/profile' element={ 
+          <ProtectedRoute><ProfilePage /></ProtectedRoute> } />
       </Routes>
     </Router>
   );

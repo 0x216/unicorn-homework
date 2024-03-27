@@ -32,15 +32,39 @@ function HomePage() {
             const hours = Math.floor((difference / (1000 * 60 * 60)) % 24);
             const minutes = Math.floor((difference / 1000 / 60) % 60);
 
+            let timeUnit = '';
+            let timeValue = 0;
+
             if (days > 0) {
-                return `${days} days`;
+                timeUnit = ' days';
+                timeValue = days;
             } else if (hours > 0) {
-                return `${hours} hours`;
+                timeUnit = ' hours';
+                timeValue = hours;
             } else {
-                return `${minutes} minutes`;
+                timeUnit = ' minutes';
+                timeValue = minutes;
             }
+
+            return (
+                <>
+                    <strong>{timeValue}</strong>
+                    <span>{timeUnit}</span>
+                </>
+            );
         }
         return 'Calculating...';
+    };
+
+    const getCigarettesNotSmoked = () => {
+        if (trackingData && trackingData.createdAt) {
+            const startDate = new Date(trackingData.createdAt);
+            const currentDate = new Date();
+            const difference = currentDate - startDate;
+            const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            return days * trackingData.savings.cigarettesPerDay;
+        }
+        return "No info";
     };
 
     return (
@@ -51,9 +75,9 @@ function HomePage() {
                         {getTimeSmokeFree()}
                     </div>
                     <div className="statistics">
-                        <h3>Hey, {userData.name || 'User'}</h3>
+                        <h2>Hey, {userData.name || 'User'}</h2>
                         <p>Days smoke-free: {getTimeSmokeFree()}</p>
-                        <p>Cigarettes not smoked: {trackingData.cigarettesPerDay * trackingData.days}</p>
+                        <p>Cigarettes not smoked: {getCigarettesNotSmoked()}</p>
                     </div>
                 </div>
             )}
