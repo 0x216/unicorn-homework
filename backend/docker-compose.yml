@@ -6,8 +6,8 @@ services:
       target: builder
     volumes:
       - .:/app
-      # - /app/node_modules
-    command: node server.js
+      - /app/node_modules
+    command: npm start
     ports:
       - "8000:8000"
     environment:

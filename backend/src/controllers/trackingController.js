@@ -27,3 +27,19 @@ exports.create = async (req, res) => {
         res.status(500).send({ message: error.message });
     }
 }
+
+exports.get = async (req, res) => {
+    const {user} = req;
+    try {
+        const tracking = await Tracking.findOne({where : {userId: user.id}});
+        if (!tracking) {
+            return res.status(404).send({ message: 'Tracking not found' });
+        }
+        const savings = await Savings.findOne({where : {trackingId: tracking.id}});
+        const trackingResponse = { ...tracking.get(), savings: savings.get() };
+        res.send(trackingResponse);
+    }
+    catch {
+        res.status(500).send({ message: error.message });
+    }
+}
