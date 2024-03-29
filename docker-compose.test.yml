@@ -1,0 +1,24 @@
+services:
+  backend:
+    environment:
+      NODE_ENV: test
+      POSTGRES_TEST_DB: test_database
+      POSTGRES_TEST_USER: test_user
+      POSTGRES_TEST_PASSWORD: test_password
+      POSTGRES_TEST_HOST: postgres
+      POSTGRES_TEST_PORT: 5432
+    command: /bin/sh -c "sleep 1 && npx sequelize db:migrate && npm test"
+    depends_on:
+      - postgres
+
+  postgres:
+    environment:
+      POSTGRES_DB: test_database
+      POSTGRES_USER: test_user
+      POSTGRES_PASSWORD: test_password
+    volumes:
+      - postgres-data-tes:/var/lib/postgresql/data
+    
+
+volumes:
+  postgres-data-tes:

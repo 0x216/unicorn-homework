@@ -1,0 +1,64 @@
+services:
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "8001:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - backend
+    networks:
+      - default
+    restart: unless-stopped
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+      target: production
+    ports:
+      - "8000:80"
+    networks:
+      - default
+    restart: unless-stopped
+    environment:
+      - REACT_APP_API_URL=http://backend/api/v1/
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    command: /bin/sh -c "npx sequelize db:migrate && node server.js"
+    environment:
+      NODE_ENV: production
+      POSTGRES_DB: your_database
+      POSTGRES_USER: your_user
+      POSTGRES_PASSWORD: your_password
+      DB_HOST: postgres
+      DB_PORT: 5432
+    networks:
+      - default
+    depends_on:
+      - postgres
+    restart: unless-stopped
+
+  postgres:
+    image: "postgres:16.2-bullseye"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_DB: your_database
+      POSTGRES_USER: your_user
+      POSTGRES_PASSWORD: your_password
+    networks:
+      - default
+    restart: unless-stopped
+
+networks:
+  default:
+    driver: bridge
+
+volumes:
+  postgres-data:

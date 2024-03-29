@@ -11,12 +11,12 @@ if (process.env.NODE_ENV !== 'test') {
       .then(() => console.log('Database connected.'))
       .catch(err => console.log('Error: ' + err));
   }
-app.use(cors());
+app.use(cors({ origin: '*' }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use('/users', userRoutes);
-app.use('/tracking', trackingRoutes);
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/tracking', trackingRoutes);
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

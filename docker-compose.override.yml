@@ -1,0 +1,21 @@
+services:
+  frontend:
+    ports:
+      - "8000:3000"
+    volumes:
+      - ./frontend/src:/app/src
+    environment:
+      NODE_ENV: development
+
+  backend:
+    ports:
+      - "8002:8000"
+    volumes:
+      - ./backend:/app
+    environment:
+      NODE_ENV: development
+    command: /bin/sh -c "npx nodemon server.js"
+
+  postgres:
+    ports:
+      - "5435:5432"

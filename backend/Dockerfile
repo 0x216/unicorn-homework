@@ -1,30 +1,34 @@
-# Build an intermediate image using node:14-alpine
-FROM node:20-alpine as builder
+# Define the base stage
+FROM node:21-bullseye as base
 
-# Set the working directory in the container
+# Set the NODE_ENV environment variable with a build argument
+ARG NODE_ENV=production
+ENV NODE_ENV=${NODE_ENV}
+
 WORKDIR /app
-
-# Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
 # Update npm to the latest version
 RUN npm install -g npm@latest
 
-# Install dependencies
-RUN npm install
+# Install production dependencies only
+RUN if [ "$NODE_ENV" = "production" ]; \
+    then npm install --only=production && npm cache clean --force; \
+    fi
 
 # Copy the rest of the application code
-COPY /src ./src
-COPY app.js .
-COPY server.js .
+COPY . .
 
-# Build the final image
-FROM node:14-alpine
+# Development stage
+FROM base as development
+# Set the NODE_ENV environment variable to 'development'
+ENV NODE_ENV=development
+# Install all dependencies, including devDependencies
+RUN npm install && npm cache clean --force
+# Command to run the development server
+CMD ["npm", "run", "dev"]
 
-WORKDIR /app
-
-# Copy from the intermediate image
-COPY --from=builder /app .
-
-# Set the default command to run the application
+# Production stage
+FROM base as production
+# Command to run the application
 CMD ["node", "server.js"]

@@ -41,6 +41,7 @@ function LoginPage() {
         if (!validateForm()) return;
 
         try {
+            // console.log(`${apiUrl}/users/login`)
             const response = await fetch(`${apiUrl}/users/login`, {
                 method: 'POST',
                 headers: {
