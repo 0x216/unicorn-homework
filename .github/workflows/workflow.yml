@@ -1,26 +1,46 @@
-name: Node.js CI
+name: tests
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]  
+    branches: [main]
   workflow_dispatch:
 
+permissions:
+  contents: read
+  actions: read
+  checks: write
+  
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
-    - name: Install Docker Compose
-      run: sudo curl -L "https://github.com/docker/compose/releases/download/v2.26.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
+      - name: Install Docker Compose
+        run: sudo curl -L "https://github.com/docker/compose/releases/download/v2.26.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose
 
-    - name: Run docker-compose.test.yml
-      run: |
-        docker compose -f docker-compose.yml -f docker-compose.test.yml up --build --exit-code-from backend
-    
-    - name: Clean up
-      if: always()
-      run: docker compose -f docker-compose.yml -f docker-compose.test.yml down
+      - name: Run docker-compose.test.yml
+        run: |
+          docker compose -f docker-compose.yml -f docker-compose.test.yml up --build backend postgres --exit-code-from backend
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: junit-test-reports
+          path: ./test-results
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v4.0.1
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          slug: 0x216/unicorn-homework
+          file: ./coverage/lcov.info
+          flags: backend,unittests
+
+      - name: Clean up
+        if: always()
+        run: docker compose -f docker-compose.yml -f docker-compose.test.yml down

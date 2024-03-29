@@ -28,7 +28,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: /bin/sh -c "npx sequelize db:migrate && node server.js"
+    command: /bin/sh -c "npm run migrate && node server.js"
     environment:
       NODE_ENV: production
       POSTGRES_DB: your_database
