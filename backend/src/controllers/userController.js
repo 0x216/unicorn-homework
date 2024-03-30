@@ -63,7 +63,7 @@ exports.delete = async (req, res) => {
 exports.getMe = async (req, res) => {
   const user = await User.findByPk(req.user.id);
   if (!user) {
-    return res.status(404).send({ message: "User not found" });
+    return res.status(401).send({ message: "Not authorized or token expire" });
   }
 
   const { password, isSuperuser, ...userData } = user.get();

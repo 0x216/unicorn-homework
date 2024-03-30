@@ -13,7 +13,7 @@ services:
       context: ./frontend
       dockerfile: Dockerfile
     environment:
-      - REACT_APP_API_URL=http://backend/api/v1/
+      NODE_ENV: development
 
   backend:
     build:

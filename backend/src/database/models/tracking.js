@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../controller");
+const User = require("./user");
 
 const Tracking = sequelize.define(
   "Tracking",
@@ -35,5 +36,14 @@ const Tracking = sequelize.define(
     tableName: "trackings",
   }
 );
+
+Tracking.belongsTo(User, {
+  foreignKey: 'userId',
+  onDelete: 'CASCADE'
+});
+
+User.hasMany(Tracking, {
+  foreignKey: 'userId'
+});
 
 module.exports = Tracking;

@@ -36,6 +36,17 @@ exports.create = async (req, res) => {
   res.status(201).send(result);
 };
 
+exports.delete = async (req, res) => {
+  const { user } = req;
+
+  const tracking = await Tracking.findOne({ where: { userId: user.id } });
+  if (!tracking) {
+    return res.status(404).send({ message: "Tracking not found" });
+  }
+  await tracking.destroy();
+  res.send({ message: "Tracking deleted successfully" });
+};
+
 exports.get = async (req, res) => {
   const { user } = req;
   try {

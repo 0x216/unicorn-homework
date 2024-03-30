@@ -23,6 +23,12 @@
     background-color: gray
 }
 
+.siteName {
+    display: flex;
+    align-items: center; 
+    gap: 5px; 
+}
+
 .siteName h2 {
     user-select: none;
     cursor: default;
@@ -82,4 +88,10 @@
 
 .user-icon {
     font-size: 24px;
+}
+
+.site-logo {
+    width: 30px;
+    height: auto;
+    filter: invert(100%); 
 }

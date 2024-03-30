@@ -1,5 +1,6 @@
 const { DataTypes } = require("sequelize");
 const sequelize = require("../controller");
+const Tracking = require("./tracking");
 
 const Savings = sequelize.define(
   "Savings",
@@ -43,5 +44,14 @@ const Savings = sequelize.define(
     tableName: "savings",
   }
 );
+
+Savings.belongsTo(Tracking, {
+  foreignKey: "trackingId",
+  onDelete: "CASCADE",
+});
+
+Tracking.hasMany(Savings, {
+  foreignKey: "trackingId",
+});
 
 module.exports = Savings;

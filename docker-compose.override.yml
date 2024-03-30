@@ -4,6 +4,8 @@ services:
       - "8000:3000"
     volumes:
       - ./frontend/src:/app/src
+    build: 
+      target: development
     environment:
       NODE_ENV: development
 

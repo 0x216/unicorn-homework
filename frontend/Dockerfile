@@ -1,5 +1,10 @@
 # Define the base stage
-FROM node:20-alpine as base
+FROM node:21-bullseye as base
+
+# Set the NODE_ENV variable
+ARG NODE_ENV
+# Set the NODE_ENV environment variable to the value of the NODE_ENV build argument
+ENV NODE_ENV=${NODE_ENV}
 
 # Set the working directory in the container
 WORKDIR /app
@@ -7,11 +12,8 @@ WORKDIR /app
 # Copy package.json and package-lock.json to the working directory
 COPY package*.json ./
 
-# Update npm to the latest version
-RUN npm install -g npm@latest
-
 # Install dependencies
-RUN npm install
+RUN npm ci
 
 # Copy the rest of the application code
 COPY . .

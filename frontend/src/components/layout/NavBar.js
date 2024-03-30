@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "../../assets/styles/NavBar.css";
+import Image from "../../assets/images/logo.svg";
 import { FaUser } from "react-icons/fa";
 import { checkTokenValidity } from "../../api/auth";
 
@@ -20,7 +21,10 @@ function NavBar() {
   return (
     <nav className="navbar">
       <div className="siteName">
-        <h2>Smokeless</h2>
+        <div className="site-logo">
+          <img src={Image} alt="Site Logo" />
+        </div>
+        <Link to="/home"><h2>Smokeless</h2></Link>
       </div>
       <div className="navbar-links">
         {isAuth && <Link to="/home">Home</Link>}
