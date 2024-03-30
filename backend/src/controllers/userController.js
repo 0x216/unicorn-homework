@@ -4,107 +4,69 @@ const { hashPassword, validatePassword } = require("../utils/passwordUtils");
 const { generateToken } = require("../utils/jwtUtils");
 
 exports.login = async (req, res) => {
-  const { email, password } = req.body;
-  try {
-    const user = await User.findOne({ where: { email } });
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
-    }
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).send({ message: "Invalid password" });
-    }
-
-    const token = generateToken(user);
-    res.send({ token });
-  } catch (error) {
-    res.status(500).send({ message: error.message });
+  const { email, password } = req.validatedBody;
+  const user = await User.findOne({ where: { email } });
+  if (!user) {
+    return res.status(404).send({ message: "User not found" });
   }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+  if (!isMatch) {
+    return res.status(400).send({ message: "Invalid password" });
+  }
+
+  const token = generateToken(user);
+  return res.send({ token });
 };
 
 exports.register = async (req, res) => {
-  const { name, email, password } = req.body;
+  const { name, email, password } = req.validatedBody;
 
   const existingUser = await User.findOne({ where: { email } });
   if (existingUser) {
     return res.status(409).send({ message: "Email already in use." });
   }
 
-  if (!validatePassword(password))
-    return res
-      .status(400)
-      .send({ message: "Password does not meet the security requirements." });
+  const hashedPassword = await hashPassword(password);
+  const user = await User.create({ name, email, password: hashedPassword });
 
-  try {
-    const hashedPassword = await hashPassword(password);
-
-    const user = await User.create({
-      name,
-      email,
-      password: hashedPassword,
-    });
-
-    const userResponse = { ...user.get(), password: undefined };
-    res.status(201).send(userResponse);
-  } catch (error) {
-    if (error.name === "SequelizeUniqueConstraintError") {
-      return res.status(409).send({ message: "Email already in use." });
-    }
-    res.status(500).send({ message: error.message });
-  }
+  const userResponse = { ...user.get(), password: undefined };
+  return res.status(201).send(userResponse);
 };
 
 exports.update = async (req, res) => {
-  try {
-    const { name, email } = req.body;
-    const { id } = req.params;
-    const user = await User.findByPk(id);
+  const { name } = req.validatedBody;
 
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
-    }
-
-    user.name = name;
-    user.email = email;
-    await user.save();
-
-    res.send(user);
-  } catch (error) {
-    res.status(500).send({ message: error.message });
+  const userId = req.user.id;
+  const user = await User.findByPk(userId);
+  if (!user) {
+    return res.status(404).send({ message: "User not found" });
   }
+
+  user.name = name.trim();
+  await user.save();
+
+  const { password, isSuperuser, ...safeUserDetails } = user.get();
+  return res.send(safeUserDetails);
 };
 
 exports.delete = async (req, res) => {
-  try {
-    const { id } = req.params;
-    const user = await User.findByPk(id);
-
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
-    }
-
-    if (req.user.is_superuser) {
-      await user.destroy();
-      res.send({ message: "User deleted successfully" });
-    } else {
-      res.status(403).send({ message: "Not authorized" });
-    }
-  } catch (error) {
-    res.status(500).send({ message: error.message });
+  const { id } = req.params;
+  const user = await User.findByPk(id);
+  if (!user) {
+    return res.status(404).send({ message: "User not found" });
   }
+
+  await user.destroy();
+  return res.send({ message: "User deleted successfully" });
 };
 
 exports.getMe = async (req, res) => {
-  try {
-    if (!req.user) return res.status(404).send({ message: "User not found" });
-
-    const user = await User.findByPk(req.user.id);
-    if (!user) return res.status(404).send({ message: "User not found" });
-
-    const { password, isSuperuser, ...userData } = user.get();
-    res.send(userData);
-  } catch {
-    res.status(500).send({ message: error.message });
+  const user = await User.findByPk(req.user.id);
+  if (!user) {
+    return res.status(404).send({ message: "User not found" });
   }
+
+  const { password, isSuperuser, ...userData } = user.get();
+  return res.send(userData);
 };

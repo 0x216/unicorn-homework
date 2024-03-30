@@ -23,7 +23,7 @@ const Savings = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "Trackings",
+        model: "trackings",
         key: "id",
       },
     },
@@ -41,6 +41,7 @@ const Savings = sequelize.define(
   {
     timestamps: true,
     underscored: true,
+    tableName: "savings",
   }
 );
 

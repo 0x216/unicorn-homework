@@ -20,12 +20,6 @@ services:
       context: ./backend
       dockerfile: Dockerfile
     command: /bin/sh -c "node server.js"
-    environment:
-      POSTGRES_TEST_DB: your_database
-      POSTGRES_TEST_USER: your_user
-      POSTGRES_TEST_PASSWORD: your_password
-      DB_TEST_HOST: postgres
-      DB_TEST_PORT: 5432
 
   postgres:
     image: "postgres:16.2-bullseye"

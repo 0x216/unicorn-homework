@@ -18,7 +18,7 @@ const Achievements = sequelize.define(
       type: DataTypes.INTEGER,
       allowNull: false,
       references: {
-        model: "Users",
+        model: "users",
         key: "id",
       },
     },
@@ -36,6 +36,7 @@ const Achievements = sequelize.define(
   {
     timestamps: true,
     underscored: true,
+    tableName: "achievements",
   }
 );
 

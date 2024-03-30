@@ -14,6 +14,11 @@ services:
       - ./backend:/app
     environment:
       NODE_ENV: development
+      POSTGRES_DB: your_database
+      POSTGRES_USER: your_user
+      POSTGRES_PASSWORD: your_password
+      DB_HOST: postgres
+      DB_PORT: 5432
     command: /bin/sh -c "npx nodemon server.js"
 
   postgres:

@@ -1,0 +1,6 @@
+{
+    "ignore": ["swagger-output.json"],
+    "watch": ["src/" , "app.js", "server.js"],
+    "exec": "node server.js"
+  }
+  

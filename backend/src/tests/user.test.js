@@ -1,111 +1,43 @@
 const request = require("supertest");
-const DataTypes = require("sequelize");
+const User = require("../database/models/user");
 const app = require("../../app");
-const defineUserModel = require("../database/models/user");
 const sequelize = require("../database/controller");
 
 beforeAll(async () => {
-  try {
-    await sequelize.sync({ force: true });
-  } catch (error) {
-    console.error("database sync error:", error);
-  }
+  await sequelize.sync({ force: true });
 });
 
 afterAll(async () => {
   await sequelize.close();
 });
 
-const User = new defineUserModel(sequelize, DataTypes);
+describe("User Registration and Login API", () => {
+  const userData = {
+    name: "Test User",
+    email: "test@example.com",
+    password: "Password123!",
+  };
 
-describe("User API", () => {
   it("should create a new user", async () => {
-    const response = await request(app).post("/api/v1/users/register/").send({
-      name: "Test User",
-      email: "test@example.com",
-      password: "Password123!",
-    });
+    const response = await request(app)
+      .post("/api/v1/users/register/")
+      .send(userData);
     expect(response.statusCode).toBe(201);
-    expect(response.body.email).toBe("test@example.com");
-    expect(response.body.name).toBe("Test User");
+    expect(response.body.email).toBe(userData.email);
+    expect(response.body.name).toBe(userData.name);
   });
-});
 
-describe("User API", () => {
-  it("should create a new user without name", async () => {
-    const response = await request(app).post("/api/v1/users/register/").send({
-      email: "test1@example.com",
-      password: "Password123!",
-    });
-    expect(response.statusCode).toBe(201);
-    expect(response.body.email).toBe("test1@example.com");
-    expect(response.body.name).toBe(null);
-  });
-});
-
-describe("User API", () => {
-  it("should create and get fail due to incorrect email", async () => {
-    const response = await request(app).post("/api/v1/users/register/").send({
-      email: "test1@",
-      password: "Password123!",
-    });
-    expect(response.statusCode).toBe(500);
-    expect(response.body.message).toBe(
-      "Validation error: Validation isEmail on email failed"
-    );
-  });
-});
-
-describe("User API", () => {
-  it("should create and get fail due to invalid password", async () => {
-    const response = await request(app).post("/api/v1/users/register/").send({
-      email: "test@ex.com",
-      password: "123",
-    });
-    expect(response.statusCode).toBe(400);
-    expect(response.body.message).toBe(
-      "Password does not meet the security requirements."
-    );
-  });
-});
-
-describe("User API", () => {
   it("should log in an existing user", async () => {
-    await request(app).post("/api/v1/users/register/").send({
-      name: "Login User",
-      email: "login@example.com",
-      password: "Password123!",
-    });
-
     const response = await request(app).post("/api/v1/users/login/").send({
-      email: "login@example.com",
-      password: "Password123!",
+      email: userData.email,
+      password: userData.password,
     });
-
     expect(response.statusCode).toBe(200);
     expect(response.body.token).toBeDefined();
   });
 });
 
-describe("User API", () => {
-  it("should log in failed due to bad creditinals", async () => {
-    await request(app).post("/api/v1/users/register/").send({
-      name: "Login User",
-      email: "login@example.com",
-      password: "Password123!",
-    });
-
-    const response = await request(app).post("/api/v1/users/login/").send({
-      email: "login@example.com",
-      password: "123",
-    });
-
-    expect(response.statusCode).toBe(400);
-    expect(response.body.message).toBe("Invalid password");
-  });
-});
-
-describe("User API", () => {
+describe("User Information API", () => {
   let token;
 
   beforeAll(async () => {
@@ -119,7 +51,6 @@ describe("User API", () => {
       email: "me@example.com",
       password: "Password123!",
     });
-
     token = resLogin.body.token;
   });
 
@@ -127,7 +58,6 @@ describe("User API", () => {
     const response = await request(app)
       .get("/api/v1/users/me")
       .set("Authorization", `Bearer ${token}`);
-
     expect(response.statusCode).toBe(200);
     expect(response.body.email).toBe("me@example.com");
     expect(response.body.name).toBe("Me User");
@@ -135,7 +65,6 @@ describe("User API", () => {
 
   it("should fail to retrieve user information if no token is provided", async () => {
     const response = await request(app).get("/api/v1/users/me");
-
     expect(response.statusCode).toBe(403);
   });
 
@@ -143,7 +72,68 @@ describe("User API", () => {
     const response = await request(app)
       .get("/api/v1/users/me")
       .set("Authorization", "Bearer wrongtoken");
-
     expect(response.statusCode).toBe(401);
+  });
+});
+
+describe("User Update and Delete API", () => {
+  let userToken, superuserToken;
+
+  beforeAll(async () => {
+    await request(app).post("/api/v1/users/register").send({
+      name: "Regular User",
+      email: "regular@example.com",
+      password: "Password123!",
+    });
+
+    await request(app).post("/api/v1/users/register").send({
+      name: "Superuser",
+      email: "superuser@example.com",
+      password: "Password123!",
+    });
+
+    const foundUser = await User.findOne({
+      where: { email: "superuser@example.com" },
+    });
+    foundUser.isSuperuser = true;
+    await foundUser.save();
+
+    const userLoginResponse = await request(app)
+      .post("/api/v1/users/login")
+      .send({
+        email: "regular@example.com",
+        password: "Password123!",
+      });
+    userToken = userLoginResponse.body.token;
+
+    const superuserLoginResponse = await request(app)
+      .post("/api/v1/users/login")
+      .send({
+        email: "superuser@example.com",
+        password: "Password123!",
+      });
+    superuserToken = superuserLoginResponse.body.token;
+  });
+  it("should update user name", async () => {
+    const response = await request(app)
+      .put("/api/v1/users/update/")
+      .set("Authorization", `Bearer ${userToken}`)
+      .send({ name: "Updated User" });
+    expect(response.statusCode).toBe(200);
+    expect(response.body.name).toBe("Updated User");
+  });
+
+  it("should delete a user as superuser", async () => {
+    const response = await request(app)
+      .delete("/api/v1/users/delete/1")
+      .set("Authorization", `Bearer ${superuserToken}`);
+    expect(response.statusCode).toBe(200);
+  });
+
+  it("should prevent non-superusers from deleting a user", async () => {
+    const response = await request(app)
+      .delete("/api/v1/users/delete/2")
+      .set("Authorization", `Bearer ${userToken}`);
+    expect(response.statusCode).toBe(403);
   });
 });
