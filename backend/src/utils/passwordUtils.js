@@ -1,5 +1,5 @@
-const bcrypt = require('bcrypt');
-const validator = require('validator');
+const bcrypt = require("bcrypt");
+const validator = require("validator");
 
 const saltRounds = 10;
 

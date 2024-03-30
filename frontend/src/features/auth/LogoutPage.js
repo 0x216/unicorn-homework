@@ -1,21 +1,21 @@
-import React, { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 function LogoutPage() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    useEffect(() => {
-        localStorage.removeItem('token');
+  useEffect(() => {
+    localStorage.removeItem("token");
 
-        navigate('/');
-    }, [navigate]);
+    navigate("/");
+  }, [navigate]);
 
-    return (
-        <div>
-            <p>Logging out...</p>
-            {}
-        </div>
-    );
+  return (
+    <div>
+      <p>Logging out...</p>
+      {}
+    </div>
+  );
 }
 
 export default LogoutPage;

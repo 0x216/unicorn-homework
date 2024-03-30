@@ -48,9 +48,9 @@
 
 .button-container {
     display: flex;
-    justify-content: center; 
-    margin-top: 20px; 
-    width: 100%; 
+    justify-content: center;
+    margin-top: 20px;
+    width: 100%;
 }
 
 .login-form button {

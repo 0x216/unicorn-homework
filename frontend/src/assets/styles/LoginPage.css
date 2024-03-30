@@ -46,8 +46,8 @@
 
 .button-container {
     display: flex;
-    justify-content: center; 
-    margin-top: 20px; 
+    justify-content: center;
+    margin-top: 20px;
 }
 
 .login-form button:hover {

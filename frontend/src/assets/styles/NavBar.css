@@ -26,7 +26,7 @@
 .siteName h2 {
     user-select: none;
     cursor: default;
-    color: white; 
+    color: white;
 }
 
 .navbar-links {
@@ -39,7 +39,7 @@
     text-decoration: none;
     padding: 10px;
     display: inline-block;
-    transition: all 0.3s ease; 
+    transition: all 0.3s ease;
 }
 
 .user-icon:hover {
@@ -65,7 +65,7 @@
     right: 0;
     background-color: #f9f9f9;
     min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     z-index: 1;
 }
 
