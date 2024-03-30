@@ -19,7 +19,7 @@ services:
       POSTGRES_PASSWORD: your_password
       DB_HOST: postgres
       DB_PORT: 5432
-    command: /bin/sh -c "npx nodemon server.js"
+    command: /bin/sh -c "npm run migrate && npx nodemon server.js"
 
   postgres:
     ports:

@@ -10,10 +10,6 @@ const Achievements = sequelize.define(
       autoIncrement: true,
       allowNull: false,
     },
-    days: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-    },
     userId: {
       type: DataTypes.INTEGER,
       allowNull: false,

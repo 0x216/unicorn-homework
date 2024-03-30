@@ -10,13 +10,12 @@ const Savings = sequelize.define(
       autoIncrement: true,
       allowNull: false,
     },
-    days: {
-      type: DataTypes.INTEGER,
-      allowNull: false,
-      defaultValue: 0,
-    },
     cigarettesPerDay: {
       type: DataTypes.INTEGER,
+      allowNull: false,
+    },
+    cost: {
+      type: DataTypes.FLOAT,
       allowNull: false,
     },
     trackingId: {

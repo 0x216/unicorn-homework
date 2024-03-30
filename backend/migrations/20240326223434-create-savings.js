@@ -9,13 +9,12 @@ module.exports = {
         autoIncrement: true,
         allowNull: false,
       },
-      days: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        defaultValue: 0,
-      },
       cigarettes_per_day: {
         type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      cost: {
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       tracking_id: {

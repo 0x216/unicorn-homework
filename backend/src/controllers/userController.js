@@ -37,8 +37,7 @@ exports.register = async (req, res) => {
 exports.update = async (req, res) => {
   const { name } = req.validatedBody;
 
-  const userId = req.user.id;
-  const user = await User.findByPk(userId);
+  const user = await User.findByPk(req.user.id);
   if (!user) {
     return res.status(404).send({ message: "User not found" });
   }

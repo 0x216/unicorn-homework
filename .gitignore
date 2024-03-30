@@ -1,4 +1,4 @@
 .env
 test-results/
 coverage/
-nodemodules/
+node_modules/

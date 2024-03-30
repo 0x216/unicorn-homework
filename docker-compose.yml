@@ -19,7 +19,7 @@ services:
     build:
       context: ./backend
       dockerfile: Dockerfile
-    command: /bin/sh -c "node server.js"
+    command: /bin/sh -c "npm run migrate && node server.js"
 
   postgres:
     image: "postgres:16.2-bullseye"
