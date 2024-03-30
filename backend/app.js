@@ -10,7 +10,7 @@ const sequelize = require("./src/database/controller");
 
 const app = express();
 
-app.use(cors({ origin: "*" }));
+app.use(cors({ origin: process.env.CORS_ORIGIN || "*" }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/api/v1", baseRoute);

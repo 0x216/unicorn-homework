@@ -3,6 +3,7 @@ services:
     build:
       args:
         NODE_ENV: test
+        
     environment:
       NODE_ENV: test
       POSTGRES_TEST_DB: test_database
