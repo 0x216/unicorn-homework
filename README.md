@@ -1,4 +1,6 @@
-
+[![codecov](https://codecov.io/gh/0x216/unicorn-homework/graph/badge.svg?token=V7CIVQ0LQH)](https://codecov.io/gh/0x216/unicorn-homework)
+[![tests](https://github.com/0x216/unicorn-homework/actions/workflows/tests.yml/badge.svg)](https://github.com/0x216/unicorn-homework/actions/workflows/tests.yml)
+[![Build and Push Docker images](https://github.com/0x216/unicorn-homework/actions/workflows/build-and-push.yml/badge.svg)](https://github.com/0x216/unicorn-homework/actions/workflows/build-and-push.yml)
 # 🦄 Unicorn University Homework Repository
 
 Welcome to my little adventure into the world of JavaScript development! This repository is a submission for a homework assignment at Unicorn University. 🏫
