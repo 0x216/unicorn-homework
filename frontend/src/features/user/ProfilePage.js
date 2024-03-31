@@ -3,8 +3,8 @@ import "../../assets/styles/ProfilePage.css";
 
 function ProfilePage() {
   return (
-    <div className="login-container">
-      <form className="login-form">
+    <div className="profile-container">
+      <form className="profile-form">
         <h2>Profile Page</h2>
         <FaUser className="profile-logo" />
         <input type="email" placeholder="Email" />
