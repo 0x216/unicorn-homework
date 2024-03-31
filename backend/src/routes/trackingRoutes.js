@@ -13,5 +13,6 @@ router.post(
   validate(createValidation),
   trackingController.create
 );
+router.delete("/delete", auth, trackingController.delete);
 
 module.exports = router;
