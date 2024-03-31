@@ -9,6 +9,7 @@ import ProtectedRoute from "./features/auth/ProtectedRoute";
 import LogoutPage from "./features/auth/LogoutPage";
 import RegisterPage from "./features/auth/RegisterPage";
 import ProfilePage from "./features/user/ProfilePage";
+import StartTrackingPage from "./features/home/StartTrackingPage";
 
 import NavBar from "./components/layout/NavBar";
 
@@ -33,6 +34,14 @@ function App() {
           element={
             <ProtectedRoute>
               <ProfilePage />
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/start-tracking"
+          element={
+            <ProtectedRoute>
+              <StartTrackingPage />
             </ProtectedRoute>
           }
         />

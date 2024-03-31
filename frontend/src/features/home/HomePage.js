@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { apiUrl } from "../../api/apiConfig";
 import "../../assets/styles/Dashboard.css";
 
 function HomePage() {
   const [trackingData, setTrackingData] = useState(null);
   const [userData, setUserData] = useState(null);
+  const [trackingError, setTrackingError] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -13,15 +16,27 @@ function HomePage() {
     };
 
     fetch(`${apiUrl}/tracking/`, { headers })
-      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === 404) {
+          throw new Error("Not found");
+        }
+        return response.json();
+      })
       .then((data) => setTrackingData(data))
-      .catch((error) => console.error("Error fetching data:", error));
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setTrackingError(true);
+      });
 
     fetch(`${apiUrl}/users/me/`, { headers })
       .then((response) => response.json())
       .then((data) => setUserData(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
+
+  const startTrackingHandler = () => {
+    navigate("/start-tracking");
+  };
 
   const getTimeSmokeFree = () => {
     if (trackingData && trackingData.createdAt) {
@@ -69,18 +84,27 @@ function HomePage() {
 
   return (
     <div>
-      {trackingData && userData && (
-        <div className="dashboard">
-          <div className="circle">{getTimeSmokeFree()}</div>
-          <div className="statistics">
-            <h2>Hey, {userData.name || "User"}</h2>
-            <p>Days smoke-free: {getTimeSmokeFree()}</p>
-            <p>Cigarettes not smoked: {getCigarettesNotSmoked()}</p>
+      <div className="dashboard">
+        {trackingError ? (
+          <div className="start-tracking">
+            <p>Start tracking your journey to a healthier life.</p>
+            <button onClick={startTrackingHandler}>Start Tracking</button>
           </div>
-        </div>
-      )}
+        ) : trackingData && userData ? (
+          <div className="centered-container"> {/* Добавлен новый контейнер для центрирования */}
+            <div className="circle">{getTimeSmokeFree()}</div>
+            <div className="statistics">
+              <h2>Hey, {userData.name || "User"}</h2>
+              <p>Days smoke-free: {getTimeSmokeFree()}</p>
+              <p>Cigarettes not smoked: {getCigarettesNotSmoked()}</p>
+            </div>
+          </div>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
     </div>
-  );
+  );  
 }
 
 export default HomePage;

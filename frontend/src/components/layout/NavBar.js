@@ -38,7 +38,7 @@ function NavBar() {
           <FaUser className="user-icon" />
           <div className="dropdown-content">
             <Link to="/profile">Profile</Link>
-            <Link to="/settings">Settings</Link>
+            {/* <Link to="/settings">Settings</Link> */}
             <Link to="/logout">Logout</Link>
           </div>
         </div>
