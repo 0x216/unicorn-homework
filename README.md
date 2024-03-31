@@ -1,29 +1,33 @@
-[![codecov](https://codecov.io/gh/0x216/unicorn-homework/graph/badge.svg?token=V7CIVQ0LQH)](https://codecov.io/gh/0x216/unicorn-homework)[![tests](https://github.com/0x216/unicorn-homework/actions/workflows/workflow.yml/badge.svg)](https://github.com/0x216/unicorn-homework/actions/workflows/workflow.yml)
 
 # 🦄 Unicorn University Homework Repository
 
 Welcome to my little adventure into the world of JavaScript development! This repository is a submission for a homework assignment at Unicorn University. 🏫
 
+As I embarked on this journey, transitioning from a Python backend development background into the vibrant world of JavaScript, I decided to apply Pythonic patterns to this project. While some elements like Docker, CI, and tests might appear overkill for its scope, they were included for educational purposes, aiming to delve deeper into the development process.
+
+The application we've crafted is a simple yet powerful web page designed to assist individuals in their journey to quit smoking 🚭. It's inspired by and seeks to mirror the functionality of mobile applications such as "Bad Habit," which I've always admired.
+
 🚀 **About the Project**
 
-As someone who has never ventured beyond the simplicity of "Hello World" in JavaScript, but comes from a background in Python backend development, I've decided to stretch my wings and apply Pythonic patterns to this small project. This project might contain elements like Docker, CI, and tests that might seem overkill for its scope and were included purely for educational purposes. However, I hope someone finds them useful, or at least interesting!
-
-The application is a simple web page designed to help you quit smoking 🚭, mirroring the functionality of mobile applications such as Bad Habit, which I've admired in the past.
+The essence of this project lies in its simplicity and the application of advanced development practices on a small scale. It's an exploration of how far one can stretch their wings in a new programming environment, applying familiar patterns from one language to another, and integrating comprehensive development practices.
 
 🛠 **Tech Stack**
 
-- **Backend:** Node.js + Express (as per the assignment's requirements), with Jest for testing.
-- **ORM:** Sequelize, chosen for its resemblance to Django ORM, along with PostgreSQL.
-- **Frontend:** React.js for that modern web app feel.
-- **Server:** Nginx, used with minimal configuration for both services.
+The project is built using:
+- **Backend:** Node.js with Express, adhering to the assignment's requirements, and Jest for robust testing.
+- **ORM:** Sequelize, selected for its Django ORM-like features, paired with PostgreSQL for database management.
+- **Frontend:** React.js, bringing a modern web app feel and interactive user interface.
+- **Server:** Nginx, configured minimally to serve both the frontend and backend efficiently.
 
-The codebase is split into two microservices for modularity and ease of development.
+Designed with modularity and ease of development in mind, the codebase is neatly divided into two microservices.
 
 🔧 **Usage and Setup**
 
-Before you dive in, make sure you have Docker Compose (v2) installed. You can find the migration guide [here](https://docs.docker.com/compose/migrate/).
+To get started, ensure Docker Compose (v2) is installed on your system. A migration guide is available [here](https://docs.docker.com/compose/migrate/).
 
 **Running Tests:**
+
+Execute the following command to run tests across the environment:
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.test.yml up --build --exit-code-from backend
@@ -31,11 +35,15 @@ docker compose -f docker-compose.yml -f docker-compose.test.yml up --build --exi
 
 **Development Mode:**
 
+For a more hands-on approach, spin up the development environment using:
+
 ```bash
 docker compose -f docker-compose.yml up
 ```
 
 **Production Mode:**
+
+To launch the application in a production setting:
 
 ```bash
 docker compose -f docker-compose.yml -f docker-compose.prod.yml up
@@ -43,12 +51,18 @@ docker compose -f docker-compose.yml -f docker-compose.prod.yml up
 
 **Environment Setup:**
 
-Ensure you have a `.env` file set up according to the `.env_example` provided in this repository.
+Make sure your environment is configured according to the `.env_example` found in this repository.
 
 **Exploring the API:**
 
-Feel free to experiment with the API using Postman. You can find the collection in the `postman` folder for easy import (Postman -> Import Collection).
+The API is open for experimentation. Utilize the Postman collection provided in the `postman` folder for an easy import and exploration process.
 
 ---
 
-This journey from Python to JavaScript, exploring new tools and technologies along the way, has been a challenging yet enriching experience. I'm eager to see where this path will take me next. 🌟
+🌐 **Live Demo**
+
+Experience the live version of our application [here](http://5.45.127.115/). Dive into the functionality designed to support your journey towards a smoke-free life.
+
+---
+
+This transition from Python to JavaScript, embracing new tools and methodologies, marks a challenging yet rewarding phase of my development journey. I look forward to the paths and discoveries that lie ahead. 🌟
