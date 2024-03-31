@@ -1,10 +1,11 @@
 # Define the base stage
 FROM node:21-bullseye as base
 
-# Set the NODE_ENV variable
 ARG NODE_ENV
-# Set the NODE_ENV environment variable to the value of the NODE_ENV build argument
+ARG REACT_APP_API_URL
+
 ENV NODE_ENV=${NODE_ENV}
+ENV REACT_APP_API_URL=${REACT_APP_API_URL}
 
 # Set the working directory in the container
 WORKDIR /app
@@ -29,7 +30,7 @@ FROM base as build
 RUN npm run build
 
 # New stage for serving the app via Nginx
-FROM nginx:alpine as production
+FROM nginx:bullseye as production
 # Copy built static files from the build stage to Nginx serve directory
 COPY --from=build /app/build /usr/share/nginx/html
 # Remove the default nginx configuration file

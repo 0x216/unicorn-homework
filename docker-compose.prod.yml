@@ -19,7 +19,8 @@ services:
       - default
     restart: unless-stopped
     environment:
-      - REACT_APP_API_URL=http://${HOST_DOMAIN}/api/v1/
+      - REACT_APP_API_URL=http://${HOST_DOMAIN}:8000/api/v1
+      - NODE_ENV=production
 
   backend:
     image: ghcr.io/${IMAGE_REPO}/backend:latest
