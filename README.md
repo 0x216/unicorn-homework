@@ -60,6 +60,11 @@ Make sure your environment is configured according to the `.env_example` found i
 The API is open for experimentation. Utilize the Postman collection provided in the `postman` folder for an easy import and exploration process.
 
 ---
+**📚 Swagger API Documentation**
+
+For an in-depth exploration of the API, you can visit our Swagger UI documentation at [http://smokeless.pro/api-docs/](http://smokeless.pro/api-docs/). This interactive documentation allows you to test out the API endpoints directly from your browser, making it easy to understand the functionalities our API offers. Whether you're looking to integrate with our service or just curious about the capabilities, the Swagger UI provides a convenient way to explore the API with no additional setup required.
+
+---
 
 🌐 **Live Demo**
 
