@@ -8,12 +8,17 @@ const {
   registerValidation,
   loginValidation,
   updateValidation,
-  updatePasswordValidation
+  updatePasswordValidation,
 } = require("../validators/userValidation");
 
 router.post("/login", validate(loginValidation), userController.login);
 router.post("/register", validate(registerValidation), userController.register);
-router.patch('/update-password', auth, validate(updatePasswordValidation), userController.update_password);
+router.patch(
+  "/update-password",
+  auth,
+  validate(updatePasswordValidation),
+  userController.update_password
+);
 router.put("/update", auth, validate(updateValidation), userController.update);
 router.delete("/delete/:id", auth, isSuperuser, userController.delete);
 

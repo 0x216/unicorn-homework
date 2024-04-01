@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 const User = require("../database/models/user");
-const { hashPassword, validatePassword } = require("../utils/passwordUtils");
+const { hashPassword } = require("../utils/passwordUtils");
 const { generateToken } = require("../utils/jwtUtils");
 
 exports.login = async (req, res) => {

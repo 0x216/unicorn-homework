@@ -127,6 +127,7 @@ function HomePage() {
               <h2>Hey, {userData.name || "User"}</h2>
               <p>Days smoke-free: {getTimeSmokeFree()}</p>
               <p>Cigarettes not smoked: {getCigarettesNotSmoked()}</p>
+              <p>Money saved: {getCigarettesNotSmoked() * trackingData.savings.cost}</p>
               <button className="relapse-button" onClick={openModal}>
                 Relapse
               </button>
