@@ -63,7 +63,7 @@ The API is open for experimentation. Utilize the Postman collection provided in 
 
 🌐 **Live Demo**
 
-Experience the live version of our application [here](http://5.45.127.115/). Dive into the functionality designed to support your journey towards a smoke-free life.
+Experience the live version of our application [here](https://smokeless.pro). Dive into the functionality designed to support your journey towards a smoke-free life.
 
 ---
 
