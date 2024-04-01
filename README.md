@@ -67,4 +67,29 @@ Experience the live version of our application [here](http://5.45.127.115/). Div
 
 ---
 
+📸 Application Gallery
+<details>
+  <summary>Login screen</summary>
+  
+![Home Screen](https://github.com/0x216/unicorn-homework/assets/89255070/407f0c06-ef14-4155-910d-6914a202dbcb)
+
+</details>
+<details>
+  <summary>Home screen</summary>
+  
+![image](https://github.com/0x216/unicorn-homework/assets/89255070/7cf2eda3-0c7c-436b-a27c-12bee5a4bfaf)
+</details>
+<details>
+  <summary>Profile screen</summary>
+  
+![image](https://github.com/0x216/unicorn-homework/assets/89255070/94257cce-66d9-4839-92ce-9ae895352646)
+</details>
+<details>
+  <summary>Start tracking screen</summary>
+  
+![image](https://github.com/0x216/unicorn-homework/assets/89255070/ea6a8577-6f39-4f5c-b563-11f32426044d)
+</details>
+
+---
+
 This transition from Python to JavaScript, embracing new tools and methodologies, marks a challenging yet rewarding phase of my development journey. I look forward to the paths and discoveries that lie ahead. 🌟
