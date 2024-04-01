@@ -38,6 +38,7 @@ services:
         # },
         # -----------------------------
       - REACT_APP_API_URL=http://${HOST_DOMAIN}/api/v1
+      - HOST_DOMAIN=${HOST_DOMAIN}
       - NODE_ENV=production
 
   backend:

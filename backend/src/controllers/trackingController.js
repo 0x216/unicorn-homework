@@ -3,6 +3,20 @@ const Savings = require("../database/models/savings");
 const sequelize = require("../database/controller");
 
 exports.create = async (req, res) => {
+  /*  #swagger.tags = ['Tracking']
+      #swagger.description = 'Endpoint to start new tracking.'
+      #swagger.parameters['obj'] = {
+            in: 'body',
+            description: 'Information about daily cigarette consumption and cost.',
+            schema: { $ref: "#/definitions/CreateTrackingRequest" }
+      }
+      #swagger.responses[201] = { 
+            description: "Tracking created successfully.",
+            schema: { $ref: "#/definitions/TrackingResponse" }
+      }
+      #swagger.responses[400] = { description: "Tracking already exists" }
+      #swagger.responses[500] = { description: "Internal server error." }
+  */
   const { cigarettesPerDay, cost } = req.validatedBody;
   const userId = req.user.id;
   const result = await sequelize.transaction(async (t) => {
@@ -37,6 +51,12 @@ exports.create = async (req, res) => {
 };
 
 exports.delete = async (req, res) => {
+  /*  #swagger.tags = ['Tracking']
+      #swagger.description = 'Endpoint to delete tracking.'
+      #swagger.responses[200] = { description: "Tracking deleted successfully." }
+      #swagger.responses[404] = { description: "Tracking not found." }
+      #swagger.responses[500] = { description: "Internal server error." }
+  */
   const { user } = req;
 
   const tracking = await Tracking.findOne({ where: { userId: user.id } });
@@ -48,6 +68,15 @@ exports.delete = async (req, res) => {
 };
 
 exports.get = async (req, res) => {
+  /*  #swagger.tags = ['Tracking']
+      #swagger.description = 'Endpoint to get info about tracking.'
+      #swagger.responses[200] = { 
+            description: "Tracking info retrieved successfully.",
+            schema: { $ref: "#/definitions/TrackingResponse" }
+      }
+      #swagger.responses[404] = { description: "Tracking or savings not found." }
+      #swagger.responses[500] = { description: "Internal server error." }
+  */
   const { user } = req;
   try {
     const tracking = await Tracking.findOne({ where: { userId: user.id } });
