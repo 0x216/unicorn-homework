@@ -21,9 +21,5 @@ services:
       POSTGRES_USER: your_user
       POSTGRES_PASSWORD: your_password
 
-networks:
-  default:
-    driver: bridge
-
 volumes:
   postgres-data:

@@ -27,8 +27,14 @@ const updateValidation = Joi.object({
   name: Joi.string().min(1).max(64).optional(),
 });
 
+const updatePasswordValidation = Joi.object({
+  new_password: password,
+  old_password: Joi.string().required(),
+});
+
 module.exports = {
   registerValidation,
   loginValidation,
   updateValidation,
+  updatePasswordValidation,
 };

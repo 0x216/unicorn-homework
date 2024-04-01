@@ -34,6 +34,27 @@ exports.register = async (req, res) => {
   return res.status(201).send(userResponse);
 };
 
+exports.update_password = async (req, res) => {
+  const { new_password, old_password } = req.validatedBody;
+
+  const user = await User.findByPk(req.user.id);
+  if (!user) {
+    return res.status(404).send({ message: "User not found" });
+  }
+
+  let isMatch = await bcrypt.compare(old_password, user.password);
+  if (!isMatch) {
+    return res.status(400).send({ message: "Invalid password" });
+  }
+
+  const hashedPassword = await hashPassword(new_password);
+  user.password = hashedPassword;
+
+  await user.save();
+
+  return res.send({ message: "Password updated successfully" });
+};
+
 exports.update = async (req, res) => {
   const { name } = req.validatedBody;
 
