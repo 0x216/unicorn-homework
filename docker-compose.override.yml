@@ -1,17 +1,18 @@
 services:
   frontend:
     ports:
-      - "8000:3000"
+      - "3000:3000"
     volumes:
       - ./frontend/src:/app/src
-    build: 
+    build:
       target: development
     environment:
       NODE_ENV: development
+      REACT_APP_API_URL: http://localhost:8000/api/v1
 
   backend:
     ports:
-      - "8002:8000"
+      - "8000:8000"
     volumes:
       - ./backend:/app
     environment:
