@@ -1,14 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { apiUrl } from "../../api/apiConfig";
+import Modal from "../../components/common/Modal";
 import "../../assets/styles/Dashboard.css";
 
 function HomePage() {
   const [trackingData, setTrackingData] = useState(null);
   const [userData, setUserData] = useState(null);
   const [trackingError, setTrackingError] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const navigate = useNavigate();
 
+  const handleConfirm = () => {
+    const token = localStorage.getItem("token");
+    fetch(`${apiUrl}/tracking/delete/`, {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (response.ok) {
+          closeModal();
+          navigate(0);
+        } else {
+          // TODO: Handle error
+          closeModal();
+          navigate(0);
+        }
+      })
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
+  
   useEffect(() => {
     const token = localStorage.getItem("token");
     const headers = {
@@ -91,20 +119,36 @@ function HomePage() {
             <button onClick={startTrackingHandler}>Start Tracking</button>
           </div>
         ) : trackingData && userData ? (
-          <div className="centered-container"> {/* Добавлен новый контейнер для центрирования */}
+          <div className="centered-container">
+            {" "}
+            {/* Добавлен новый контейнер для центрирования */}
             <div className="circle">{getTimeSmokeFree()}</div>
             <div className="statistics">
               <h2>Hey, {userData.name || "User"}</h2>
               <p>Days smoke-free: {getTimeSmokeFree()}</p>
               <p>Cigarettes not smoked: {getCigarettesNotSmoked()}</p>
+              <button className="relapse-button" onClick={openModal}>
+                Relapse
+              </button>
             </div>
           </div>
         ) : (
           <p>Loading...</p>
         )}
       </div>
+      <Modal
+        isOpen={isModalOpen}
+        title="Reset Progress"
+        onClose={closeModal}
+        onConfirm={handleConfirm}
+      >
+        <p>
+          Are you sure you want to reset your progress? This action cannot be
+          undone.
+        </p>
+      </Modal>
     </div>
-  );  
+  );
 }
 
 export default HomePage;

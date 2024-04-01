@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
 body {
     background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e);
     background-size: 400% 400%;
@@ -108,6 +109,25 @@ body {
     font-size: 18px;
     margin-bottom: 10px;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+.relapse-button {
+    font-size: 20px;
+    padding: 10px 30px;
+    border: none;
+    border-radius: 5px;
+    background-image: linear-gradient(135deg, #ff416c, #ff4b2b);
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+}
+
+.relapse-button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
 @keyframes fadeIn {
