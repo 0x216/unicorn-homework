@@ -40,7 +40,7 @@ docker compose -f docker-compose.yml -f docker-compose.test.yml up --build --exi
 For a more hands-on approach, spin up the development environment using:
 
 ```bash
-docker compose -f docker-compose.yml up
+docker compose -f docker-compose.yml -f docker-compose.override.yml up
 ```
 
 **Production Mode:**
