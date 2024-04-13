@@ -24,6 +24,7 @@ services:
       DB_HOST: postgres
       DB_PORT: 5432
     command: /bin/sh -c "npm run migrate && npx nodemon server.js"
+    restart: unless-stopped
 
   postgres:
     ports:
