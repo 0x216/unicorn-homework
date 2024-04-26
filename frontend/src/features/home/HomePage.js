@@ -36,7 +36,7 @@ function HomePage() {
         console.error("Error:", error);
       });
   };
-  
+
   useEffect(() => {
     const token = localStorage.getItem("token");
     const headers = {
@@ -121,13 +121,16 @@ function HomePage() {
         ) : trackingData && userData ? (
           <div className="centered-container">
             {" "}
-            {/* Добавлен новый контейнер для центрирования */}
+            {}
             <div className="circle">{getTimeSmokeFree()}</div>
             <div className="statistics">
               <h2>Hey, {userData.name || "User"}</h2>
               <p>Days smoke-free: {getTimeSmokeFree()}</p>
               <p>Cigarettes not smoked: {getCigarettesNotSmoked()}</p>
-              <p>Money saved: {getCigarettesNotSmoked() * trackingData.savings.cost}</p>
+              <p>
+                Money saved:{" "}
+                {getCigarettesNotSmoked() * trackingData.savings.cost}
+              </p>
               <button className="relapse-button" onClick={openModal}>
                 Relapse
               </button>

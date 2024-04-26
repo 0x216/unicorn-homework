@@ -45,7 +45,7 @@ function RegisterPage() {
 
       const registerData = await registerResponse.json();
       if (registerResponse.ok) {
-          const loginResponse = await fetch(`${apiUrl}/users/login`, {
+        const loginResponse = await fetch(`${apiUrl}/users/login`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

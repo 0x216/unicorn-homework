@@ -13,7 +13,7 @@ function ProfilePage() {
   });
   const [initialData, setInitialData] = useState({ email: "", name: "" });
   const [error, setError] = useState("");
-  const [successMessage, setSuccessMessage] = useState(""); 
+  const [successMessage, setSuccessMessage] = useState("");
 
   useEffect(() => {
     const fetchUser = async () => {
@@ -75,7 +75,11 @@ function ProfilePage() {
       }
     }
 
-    if (user.newPassword && user.newPassword === user.confirmNewPassword && user.oldPassword) {
+    if (
+      user.newPassword &&
+      user.newPassword === user.confirmNewPassword &&
+      user.oldPassword
+    ) {
       try {
         const passwordResponse = await fetch(
           `${apiUrl}/users/update-password/`,
@@ -98,7 +102,12 @@ function ProfilePage() {
           newPassword: "",
           confirmNewPassword: "",
         });
-        setSuccessMessage(successMessage => successMessage + (successMessage ? " & Password" : "Password") + " updated successfully");
+        setSuccessMessage(
+          (successMessage) =>
+            successMessage +
+            (successMessage ? " & Password" : "Password") +
+            " updated successfully"
+        );
       } catch (error) {
         setError(error.message);
         return;
@@ -144,7 +153,9 @@ function ProfilePage() {
           onChange={handleChange}
         />
         {error && <div style={{ color: "red" }}>{error}</div>}
-        {successMessage && <div style={{ color: "green" }}>{successMessage}</div>}
+        {successMessage && (
+          <div style={{ color: "green" }}>{successMessage}</div>
+        )}
         <div className="button-container">
           <button type="submit">Save</button>
         </div>
